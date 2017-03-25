@@ -1,17 +1,21 @@
 #ifndef __ColorMatrix__
 #define __ColorMatrix__
+#include <vector>
 #include "Color.h"
+#include "Point.h"
+
+using namespace std;
 
 class ColorMatrix{
 
 public:
-	ColorMatrix(int maxY, int maxY);
-
-	void setColor(int x, int y, Color c); //set semua warna
-	Color getColor(int x, int y);
+	ColorMatrix(int width, int height);
+	
+	void setColor(Point p, Color c); //set semua warna
+	Color getColor(Point p);
 	
 private:
-	Color* map;
+	vector<Color> map;
 	int maxX;
 	int maxY;
 	

@@ -8,10 +8,12 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
+#include <vector>
 
 #include "Color.h"
-#include "shape.h"
-#include "Border.h"
+#include "Layer.h"
+
+using namespace std;
 
 class Screen{
 
@@ -23,18 +25,20 @@ public :
 	
 	int getWidth(); // mendapatkan width dari resolusi layar
 	int getHeight(); // mendapatkan height dari resolusi layar
-
+	
 	void ClearScreen(); //Membersihkan layar
 	
-	void drawLine(Point start, Point end, Color c);
+	void addLayer();
+	Layer& getLayer(int i);
+	void drawAll();
 	
 private :
 	struct fb_fix_screeninfo finfo;
 	struct fb_var_screeninfo vinfo;
 	int fb_fd;
 	char *fbp;
+	vector<Layer> layers;
 	Border screenBorder;
-
 };
 
 extern Screen screen; //a Global variable screen for other class to use

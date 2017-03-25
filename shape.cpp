@@ -2,19 +2,17 @@
 
 #define PI  3.14159265
 #define EPS 0.00001
+
 using namespace std;
 
-Shape::Shape() {
+Shape::Shape() : Border(0,0,0), Fill(0,0,0) {
 	edges.clear();
-	Border = Color(0,0,0);
-	Fill = Color(0,0,0);
 }
 Shape::Shape(vector<Point>& starting_edge, Color borderc, Color fillc) {
 	edges.clear();
 	edges = starting_edge;
 	Border = borderc;
 	Fill = fillc;
-	Fill = Color(0,0,0);
 }
 Shape::~Shape(){
 	edges.clear();

@@ -1,20 +1,18 @@
 #include "Border.h"
 
-#define PI  3.14159265
-#define EPS 0.00001
 using namespace std;
 
 Border::Border() {
 	minX = 0; maxX = 0;
 	minY = 0; maxY = 0;
 }
-Border::Border(int _minX, int _maxX, int _minY, int _maxX) {
+Border::Border(int _minX, int _maxX, int _minY, int _maxY) {
 	minX = _minX; maxX = _maxX;
-	minY = _minX; maxY = _maxX;
+	minY = _minY; maxY = _maxY;
 }
 
 bool Border::isOverflow(Point p) {
-	return !((p.x >= minX)&&(p.x <= maxX)&&(p.y >= minY)&&(p.y <= maxY))
+	return !((p.x >= minX)&&(p.x <= maxX)&&(p.y >= minY)&&(p.y <= maxY));
 }
 int Border::getClipCode(Point p) {
 	int code = 0;

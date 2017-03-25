@@ -1,8 +1,11 @@
 #ifndef __SHAPE__
 #define __SHAPE__
 #include "Point.h"
+#include "Color.h"
 #include <vector>
 #include <cmath>
+
+using namespace std;
 
 // Model Class to store Eclosed Polyline Data
 class Shape {
