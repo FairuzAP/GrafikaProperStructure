@@ -19,7 +19,6 @@ Color Layer::getColor(Point p) {
 		
 	return colorMap.getColor(p);
 }
-
 void Layer::setColor(Point p, Color color) {
 	if(p.y < 0 || p.y > height || p.x < 0 || p.x > width)
 		return;
@@ -28,6 +27,10 @@ void Layer::setColor(Point p, Color color) {
 }
 
 void Layer::setBorder(Border newB) {
+	if(newB.minX < 0) newB.minX = 0;
+	if(newB.maxX > width) newB.maxX = width;
+	if(newB.minY < 0) newB.minY = 0;
+	if(newB.maxY > height) newB.maxY = height;
 	screenBorder = newB;
 }
 
@@ -38,8 +41,6 @@ void Layer::ClearScreen() {
 		}
 	}
 }
-
-
 void Layer::drawLine(Point start, Point end, Color c) {
 	
 	//cout << "Drawing from " << start.x << "," << start.y << " to " << end.x << "," << end.y << endl;
@@ -181,16 +182,15 @@ void Layer::drawLine(Point start, Point end, Color c) {
 	}
 	
 }
-
 void Layer::floodFill(Point fire, Color oldc, Color newc) {
 	if((!screenBorder.isOverflow(fire)) ) {
 		if(oldc.isSame(getColor(fire))) {
 			
 			setColor(fire, newc);				
-			floodFillBorder(Point(fire.x,(fire.y+1)),oldc,newc);
-			floodFillBorder(Point(fire.x,(fire.y-1)),oldc,newc);
-			floodFillBorder(Point((fire.x+1),fire.y),oldc,newc);
-			floodFillBorder(Point((fire.x-1),fire.y),oldc,newc);
+			floodFill(Point(fire.x,(fire.y+1)),oldc,newc);
+			floodFill(Point(fire.x,(fire.y-1)),oldc,newc);
+			floodFill(Point((fire.x+1),fire.y),oldc,newc);
+			floodFill(Point((fire.x-1),fire.y),oldc,newc);
 				
 		}
 	}
@@ -213,12 +213,30 @@ void Layer::floodFillBorder(Point fire, Color borderc, Color newc) {
 	}
 }
 
+
 void Layer::addShape(Shape s) {
 	shapeList.push_back(s);
 }
 Shape& Layer::getShape(int index) {
 	return shapeList.at(index);
 }
+
+void Layer::moveAll(int deltaX, int deltaY) {
+	for(int i=0; i<shapeList.size(); i++) {
+		getShape(i).move(deltaX,deltaY);
+	}
+}
+void Layer::rotateAll(int theta, Point poros) {
+	for(int i=0; i<shapeList.size(); i++) {
+		getShape(i).rotate(theta,poros);
+	}
+}
+void Layer::scaleAll(double x, Point poros) {
+	for(int i=0; i<shapeList.size(); i++) {
+		getShape(i).scale(x,poros);
+	}
+}
+
 
 void Layer::drawShapeOutline(int index) {
 	Shape thisS = getShape(index);
@@ -236,13 +254,33 @@ void Layer::drawAllShapeOutline() {
 	}
 }
 
-void Layer::fillShape(int index) {
+void Layer::drawFilledShape(int index) {
+	drawShapeOutline(index);
 	Shape thisS = getShape(index);
-	floodFillBorder(thisS.floodfill_seed, thisS.Border, thisS.Fill);
+	floodFill(thisS.floodfill_seed, Color(0,0,0), thisS.Fill);
 }
-void Layer::fillAllShape() {
+void Layer::drawFilledAllShape() {
+	drawAllShapeOutline();
 	for(int i=0; i<shapeList.size(); i++) {
-		fillShape(i);
+		drawFilledShape(i);
 	}
+}
+
+void Layer::deleteShape(int index) {
+	Shape thisS = getShape(index);
+	Color background(0,0,0);
+	
+	int i;
+	for(i=1; i<thisS.edges.size(); i++) {
+		drawLine(thisS.edges.at(i-1), thisS.edges.at(i), background);
+	}
+	drawLine(thisS.edges.at(i-1), thisS.edges.at(0), background);
+	
+	floodFill(thisS.floodfill_seed, thisS.Fill, background);
+}
+void Layer::deleteAllShape() {
+	for(int i=0; i<shapeList.size(); i++) {
+		deleteShape(i);
+	}	
 }
 

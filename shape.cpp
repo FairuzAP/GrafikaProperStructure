@@ -45,13 +45,13 @@ void Shape::setBorderColor(Color c) {
 	Border = c;
 }
 
-void Shape::moveBy(int deltaX, int deltaY){
+void Shape::move(int deltaX, int deltaY){
 	for(int i=0; i<edges.size(); i++){
 		edges[i].moveBy(deltaX, deltaY);
 	}
 	floodfill_seed.moveBy(deltaX,deltaY);
 }
-void Shape::Rotate(int theta, Point poros){
+void Shape::rotate(int theta, Point poros){
 	for(int i=0; i<edges.size(); i++){
 		edges[i].rotatePoros(theta, poros);
 	}

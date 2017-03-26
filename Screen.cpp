@@ -1,7 +1,8 @@
 #include "Screen.h"
+#include <iostream>
 
 using namespace std;
-using namespace std;
+
 Screen::Screen(){
 	fb_fd = open("/dev/fb0",O_RDWR);
 
@@ -68,8 +69,12 @@ void Screen::ClearScreen(){
 	}
 }
 
-
 void Screen::setBorder(Border newB) {
+	if(newB.minX < 0) newB.minX = 0;
+	if(newB.maxX > getWidth()) newB.maxX = getWidth();
+	if(newB.minY < 0) newB.minY = 0;
+	if(newB.maxY > getHeight()) newB.maxY = getHeight();
+	
 	screenBorder = newB;
 	for(int i=0; i<layers.size(); i++) 
 		layers.at(i).setBorder(newB);
@@ -81,15 +86,15 @@ void Screen::addLayer() {
 Layer& Screen::getLayer(int i) {
 	return layers.at(i);
 }
-	
+
 void Screen::drawAll() {
 	Color background(0,0,0);
 	ClearScreen();
-
+	
 	for(int y=screenBorder.minY; y<screenBorder.maxY; y++) {
 		for(int x=screenBorder.minX; x<screenBorder.maxX; x++) {
 			
-			for(int l=layers.size()-1; l>=0; l--) {
+			for(int l=layers.size()-1; l>=0; l--) {			
 				if(!background.isSame(layers.at(l).getColor(Point(x,y)))) {
 					
 					setColor(Point(x,y), 1, layers.at(l).getColor(Point(x,y)));
@@ -100,6 +105,5 @@ void Screen::drawAll() {
 			
 		}
 	}
-	
 }
 

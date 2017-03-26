@@ -27,8 +27,8 @@ public:
 	void setFillColor(Color C);
 	void setBorderColor(Color c);
 	
-	void moveBy(int deltaX, int deltaY);
-	void Rotate(int theta, Point poros);
+	void move(int deltaX, int deltaY);
+	void rotate(int theta, Point poros);
 	void scale(double x, Point poros);
 
 
