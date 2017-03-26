@@ -35,6 +35,9 @@ void Shape::addEdge(Point p) {
 	edges.push_back(p);
 }
 
+void Shape::setFloodFillSeed(Point p) {
+	floodfill_seed = p;
+}
 void Shape::setFillColor(Color C) {
 	Fill = C;
 }
@@ -51,14 +54,13 @@ void Shape::moveBy(int deltaX, int deltaY){
 void Shape::Rotate(int theta, Point poros){
 	for(int i=0; i<edges.size(); i++){
 		edges[i].rotatePoros(theta, poros);
-
 	}
 	floodfill_seed.rotatePoros(theta, poros);
 }
 void Shape::scale(double x, Point poros){
-	for(int i=0; i<edges.size();i++){
-		edges[i].x *=x;
-		edges[i].y *=x;
+	for(int i=0; i<edges.size(); i++){
+		edges[i].scaleBy(x, poros);
 	}
+	floodfill_seed.scaleBy(x, poros);
 }
 

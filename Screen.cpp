@@ -85,20 +85,20 @@ Layer& Screen::getLayer(int i) {
 void Screen::drawAll() {
 	Color background(0,0,0);
 	ClearScreen();
-	for(int l=layers.size()-1; l>=0; l--) {
-		
+
+	for(int y=screenBorder.minY; y<screenBorder.maxY; y++) {
 		for(int x=screenBorder.minX; x<screenBorder.maxX; x++) {
-			for(int y=screenBorder.minY; y<screenBorder.maxY; y++) {
-				
-				if(background.isSame(getColor(Point(x,y)))) {
+			
+			for(int l=layers.size()-1; l>=0; l--) {
+				if(!background.isSame(layers.at(l).getColor(Point(x,y)))) {
 					
 					setColor(Point(x,y), 1, layers.at(l).getColor(Point(x,y)));
+					break;
 					
 				}
-				
 			}
+			
 		}
-		
 	}
 	
 }

@@ -1,8 +1,6 @@
 #include "Point.h"
 #include <cmath>
 
-#define PI 3.14159265
-
 Point::Point() {
 	setPoint(0.00,0.00);
 }
@@ -52,17 +50,19 @@ void Point::moveTo(int nx, int ny){
 	y = ny/1.0;
 }
 
-void Point::rotate(int theta){
-	double oldX = x, oldY = y;
-	double degree = ((double)theta)* PI/180 ;
-	x = oldX*cos(degree) - oldY*sin(degree);
-	y = oldX*sin(degree) + oldY*cos(degree);
+void Point::rotatePoros(double theta, Point poros){
+	double cosr = cos((22*theta)/(180*7));
+	double sinr = sin((22*theta)/(180*7));
+	double tempx = poros.x + ((x - poros.x) * cosr) - ((y - poros.y) * sinr);
+	double tempy = poros.y + ((x - poros.x) * sinr) + ((y - poros.y) * cosr);
+	x = round(tempx);
+	y = round(tempy);
 }
 
-void Point::rotatePoros(int theta, Point poros){
-	double oldX = x, oldY = y;
-	double degree = ((double)theta)* PI/180 ;
-	x = poros.getX() + ((oldX - poros.getX()) * cos(degree) - (poros.getY() - oldY) * sin(degree));
-	y = poros.getY() - ((oldX - poros.getX()) * sin(degree) + (poros.getY() - oldY) * cos(degree));
+void Point::scaleBy(double ratio, Point anchor) {
+	double tempx = anchor.x + ((x - anchor.x) * ratio);
+	double tempy = anchor.y + ((y - anchor.y) * ratio);
+	x = round(tempx);
+	y = round(tempy);
 }
 

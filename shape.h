@@ -23,27 +23,19 @@ public:
 	
 	void addEdge(Point p);
 	
-	//set floodfill color
+	void setFloodFillSeed(Point p);
 	void setFillColor(Color C);
-	//set Border Color to color c
 	void setBorderColor(Color c);
 	
-	//Move the object by delta
-	//deltaX : move the object in X axis by delta X
-	//deltaY : move the object in Y axis by delta Y
 	void moveBy(int deltaX, int deltaY);
-
-	//rotate the object by theta degree clockwise with 
-	//cePoint center as  center of rotation
 	void Rotate(int theta, Point poros);
-
 	void scale(double x, Point poros);
+
 
 	Point floodfill_seed;
 	vector<Point> edges;
 	Color Border;
 	Color Fill;
-
 };
 
 #endif                                                   

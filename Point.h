@@ -17,8 +17,8 @@ public:
 	void moveBy(int DetalX, int DeltaY);
 	void moveTo(int x, int y);
 	
-	void rotate(int theta);
-	void rotatePoros(int theta, Point poros);
+	void rotatePoros(double theta, Point poros);
+	void scaleBy(double ratio, Point anchor);
 
 	double x;
 	double y;

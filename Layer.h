@@ -1,6 +1,6 @@
 #ifndef __Layer__
 #define __Layer__
-#include <list>
+#include <vector>
 
 #include "ColorMatrix.h"
 #include "shape.h"
@@ -22,17 +22,22 @@ public :
 	void floodFill(Point fire, Color oldc, Color newc);
 	void floodFillBorder(Point fire, Color borderc, Color newc);
 	
-	//void addShape(shape s);
-	//shape& getShape(int index);
+	void addShape(Shape s);
+	Shape& getShape(int index);
 	
-	//void drawAllShape();
+	void drawShapeOutline(int index);
+	void drawAllShapeOutline();
+	
+	void fillShape(int index);
+	void fillAllShape();
 	
 	
 	int height;
 	int width;
 	ColorMatrix colorMap;
 	Border screenBorder;
-	//list<shape> shapeList;
+	
+	vector<Shape> shapeList;
 };
 
 #endif

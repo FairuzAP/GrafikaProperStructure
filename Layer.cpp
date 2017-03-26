@@ -42,7 +42,7 @@ void Layer::ClearScreen() {
 
 void Layer::drawLine(Point start, Point end, Color c) {
 	
-	cout << "Drawing from " << start.x << "," << start.y << " to " << end.x << "," << end.y << endl;
+	//cout << "Drawing from " << start.x << "," << start.y << " to " << end.x << "," << end.y << endl;
 	
 	int x1 = start.x, y1 = start.y;
 	int x2 = end.x, y2 = end.y;
@@ -196,9 +196,11 @@ void Layer::floodFill(Point fire, Color oldc, Color newc) {
 	}
 }
 void Layer::floodFillBorder(Point fire, Color borderc, Color newc) {
+	
+	// cout << "Filling at " << fire.x << "," << fire.y << endl;
 	if((!screenBorder.isOverflow(fire)) ) {
 		if(!borderc.isSame(getColor(fire))) {
-			if(!borderc.isSame(getColor(fire))) {
+			if(!newc.isSame(getColor(fire))) {
 				
 				setColor(fire, newc);				
 				floodFillBorder(Point(fire.x,(fire.y+1)),borderc,newc);
@@ -211,8 +213,36 @@ void Layer::floodFillBorder(Point fire, Color borderc, Color newc) {
 	}
 }
 
-//void Layer::addShape(shape s) {}
-//shape& Layer::getShape(int index) {}
+void Layer::addShape(Shape s) {
+	shapeList.push_back(s);
+}
+Shape& Layer::getShape(int index) {
+	return shapeList.at(index);
+}
 
-//void Layer::drawAllShape() {}
+void Layer::drawShapeOutline(int index) {
+	Shape thisS = getShape(index);
+	
+	int i;
+	for(i=1; i<thisS.edges.size(); i++) {
+		drawLine(thisS.edges.at(i-1), thisS.edges.at(i), thisS.Border);
+	}
+	drawLine(thisS.edges.at(i-1), thisS.edges.at(0), thisS.Border);
+}
+void Layer::drawAllShapeOutline() {
+	ClearScreen();
+	for(int i=0; i<shapeList.size(); i++) {
+		drawShapeOutline(i);
+	}
+}
+
+void Layer::fillShape(int index) {
+	Shape thisS = getShape(index);
+	floodFillBorder(thisS.floodfill_seed, thisS.Border, thisS.Fill);
+}
+void Layer::fillAllShape() {
+	for(int i=0; i<shapeList.size(); i++) {
+		fillShape(i);
+	}
+}
 
