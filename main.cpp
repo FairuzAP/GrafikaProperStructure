@@ -5,17 +5,46 @@
 #include <unistd.h>
 #include <iostream>
 
+#include <string.h>
+#include <stdio.h>
+#include <thread>
+
 using namespace std;
 
 Screen screen;
+
+void initCaptureKeyboard(){
+	int layer, object, arg1, arg2;
+	string opr;
+	Shape *temp;
+	while (1) {
+		if (cin >> layer >> object >> opr >> arg1 >> arg2) {
+			if (!opr.compare("select")){
+				screen.getLayer(layer).getShape(object).move(100, 100);
+			}
+		}
+	}
+}
+
+void startKeystrokeThread(){
+	// Constructs the new thread and runs it. Does not block execution.
+	thread t1(initCaptureKeyboard);
+
+	// Makes the main thread wait for the new thread to finish execution, therefore blocks its own execution.
+	t1.detach();
+}
+
 int main() {
 	
 	// Screen initializing
 	screen.ClearScreen();
 	screen.addLayer();
 	screen.addLayer();
-	screen.setBorder(Border(0,1280,0,1024));
+	screen.setBorder(Border(0,800,0,600));
 	
+	// Input initializing
+	startKeystrokeThread();
+
 	// Shape1 Initializing
 	Shape s;
 	s.addEdge(Point(100,100)); s.addEdge(Point(100,200)); s.addEdge(Point(200,100));
@@ -60,7 +89,6 @@ int main() {
 		screen.drawAll();
 		usleep(50000);
 	}
-	
 	return 0;
 }
 
