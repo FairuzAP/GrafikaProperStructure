@@ -30,6 +30,7 @@ public :
 	
 	void addLayer();
 	Layer& getLayer(int i);
+	int getLayerCount();
 	void drawAll();
 	
 private :

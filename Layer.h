@@ -28,6 +28,7 @@ public :
 	// Shape Model Manipulation Method
 	void addShape(Shape s);
 	Shape& getShape(int index);
+	int getShapeCount();
 	
 	void moveAll(int deltaX, int deltaY);
 	void rotateAll(int theta, Point poros);

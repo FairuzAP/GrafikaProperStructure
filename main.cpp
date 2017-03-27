@@ -13,37 +13,13 @@ using namespace std;
 
 Screen screen;
 
-void initCaptureKeyboard(){
-	int layer, object, arg1, arg2;
-	string opr;
-	Shape *temp;
-	while (1) {
-		if (cin >> layer >> object >> opr >> arg1 >> arg2) {
-			if (!opr.compare("select")){
-				screen.getLayer(layer).getShape(object).move(100, 100);
-			}
-		}
-	}
-}
-
-void startKeystrokeThread(){
-	// Constructs the new thread and runs it. Does not block execution.
-	thread t1(initCaptureKeyboard);
-
-	// Makes the main thread wait for the new thread to finish execution, therefore blocks its own execution.
-	t1.detach();
-}
-
 int main() {
 	
 	// Screen initializing
 	screen.ClearScreen();
 	screen.addLayer();
 	screen.addLayer();
-	screen.setBorder(Border(0,800,0,600));
-	
-	// Input initializing
-	startKeystrokeThread();
+	screen.setBorder(Border(0,1280,0,1024));
 
 	// Shape1 Initializing
 	Shape s;
@@ -66,28 +42,52 @@ int main() {
 	
 	// Draw all Layer's prepared matrix
 	screen.drawAll();
-	usleep(1000000);
 	
 	// Scale all shape in layer 1, prepare for drawing, and draw it to the screen
 	screen.getLayer(1).scaleAll(1.5,Point(100,100));
 	screen.getLayer(1).drawFilledAllShape();
 	screen.drawAll();
-	usleep(1000000);
 	
 	// Move all shape in layer 1, prepare for drawing, and draw it to the screen
 	screen.getLayer(1).moveAll(50,50);
 	screen.getLayer(1).drawFilledAllShape();
 	screen.drawAll();
-	usleep(1000000);
 	
 	// Rotate all shape in layer 1, prepare for drawing, and draw it to the screen
-	for(int i=1; i<255; i++) {
-		screen.getLayer(1).rotateAll(45,Point(150,150));
+	while (1) {
+		string opr;
+		int layer, destLayer, object, arg1, arg2, arg3;
+		if (cin >> opr) {
+			if (!opr.compare("exit")){ /* Exit the program */
+				break;
+			} else if (!opr.compare("adds")) { /* Add an object to a layer */
+				cin >> layer;
+				Shape s;
+				s.addEdge(Point(100,100)); s.addEdge(Point(100,200)); s.addEdge(Point(200,100));
+				s.setFillColor(Color(255,255,0)); s.setBorderColor(Color(0,255,0)); s.setFloodFillSeed(Point(110,110));
+				screen.getLayer(layer).addShape(s);
+			} else if (!opr.compare("deletes")){ /* Delete an object */
+				cin >> layer >> object;
+				screen.getLayer(layer).deleteShape(object);
+			} else if (!opr.compare("selects")) { /* Select an object */
+				cin >> layer >> object;
+				screen.getLayer(layer).getShape(object).setFillColor(Color(1, 1, 1));
+			} else if (!opr.compare(("moves"))) { /* Move an object by arg1, arg2 */
+				cin >> layer >> object >> arg1 >> arg2;
+				screen.getLayer(layer).getShape(object).move(arg1, arg2);
+			} else if (!opr.compare("changesite")) { /* Change site */
+
+			} else if (!opr.compare("changelayer")){ /* Change layer */
+				cin >> layer >> object >> destLayer;
+				screen.getLayer(destLayer).addShape(screen.getLayer(layer).getShape(object));
+				screen.getLayer(layer).deleteShape(object);
+			}
+		}
+		//screen.getLayer(1).rotateAll(45,Point(150,150));
 		screen.getLayer(1).drawFilledAllShape();
-		screen.getLayer(0).rotateAll(30,Point(300,300));
+		//screen.getLayer(0).rotateAll(30,Point(300,300));
 		screen.getLayer(0).drawFilledAllShape();
 		screen.drawAll();
-		usleep(50000);
 	}
 	return 0;
 }
