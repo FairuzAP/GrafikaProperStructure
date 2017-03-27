@@ -111,6 +111,9 @@ void Screen::toFront(int i) {
 Layer& Screen::getLayer(int i) {
 	return layers.at(i);
 }
+int Screen::getLayerCount(){
+	return layers.size();
+}
 
 void Screen::drawAll() {
 	Color background(0,0,0);

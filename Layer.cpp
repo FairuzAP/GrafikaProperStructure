@@ -35,7 +35,7 @@ void Layer::setBorder(Border newB) {
 }
 
 void Layer::ClearScreen() {
-	for (int r=0;r<height;r++) {
+	for (int r=0;r<height - 200;r++) {
 		for (int c=0;c<width;c++) {
 			setColor(Point(c,r),Color(0,0,0));
 		}
