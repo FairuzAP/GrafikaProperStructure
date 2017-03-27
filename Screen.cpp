@@ -82,7 +82,32 @@ void Screen::setBorder(Border newB) {
 
 void Screen::addLayer() {
 	layers.push_back(Layer(getWidth(), getHeight()));
+	showlayers.push_back(true);
 }
+void Screen::deleteLayer(int idx) {
+	layers.erase(layers.begin() + idx);
+	showlayers.erase(showlayers.begin() + idx);
+}
+int Screen::getLayerCount() {
+	return layers.size();
+}
+	
+void Screen::setLayerShow(int i, bool s) {
+	showlayers.at(i) = s;
+}
+bool Screen::getLayerShowStatus(int i) {
+	return showlayers.at(i);
+}
+	
+void Screen::toBack(int i) {
+	iter_swap(layers.begin() + i, layers.begin() + 0);
+	iter_swap(showlayers.begin() + i, showlayers.begin() + 0);
+}
+void Screen::toFront(int i) {
+	iter_swap(layers.begin() + i, layers.begin() + layers.size() - 1);
+	iter_swap(showlayers.begin() + i, showlayers.begin() + showlayers.size() - 1);
+}
+
 Layer& Screen::getLayer(int i) {
 	return layers.at(i);
 }
@@ -94,11 +119,15 @@ void Screen::drawAll() {
 	for(int y=screenBorder.minY; y<screenBorder.maxY; y++) {
 		for(int x=screenBorder.minX; x<screenBorder.maxX; x++) {
 			
-			for(int l=layers.size()-1; l>=0; l--) {			
-				if(!background.isSame(layers.at(l).getColor(Point(x,y)))) {
+			for(int l=layers.size()-1; l>=0; l--) {	
+				if(showlayers.at(l)) {	
 					
-					setColor(Point(x,y), 1, layers.at(l).getColor(Point(x,y)));
-					break;
+					if(!background.isSame(layers.at(l).getColor(Point(x,y)))) {
+						
+						setColor(Point(x,y), 1, layers.at(l).getColor(Point(x,y)));
+						break;
+						
+					}
 					
 				}
 			}

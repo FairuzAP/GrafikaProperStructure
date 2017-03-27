@@ -28,8 +28,18 @@ public :
 	
 	void ClearScreen(); //Membersihkan layar
 	
+	//Layer manipulation
 	void addLayer();
+	void deleteLayer(int i);
 	Layer& getLayer(int i);
+	int getLayerCount();
+	
+	void setLayerShow(int i, bool s);
+	bool getLayerShowStatus(int i);
+	
+	void toBack(int i);
+	void toFront(int i);
+	
 	void drawAll();
 	
 private :
@@ -38,6 +48,7 @@ private :
 	int fb_fd;
 	char *fbp;
 	vector<Layer> layers;
+	vector<bool> showlayers;
 	Border screenBorder;
 };
 

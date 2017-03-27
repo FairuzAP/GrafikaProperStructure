@@ -216,9 +216,19 @@ void Layer::floodFillBorder(Point fire, Color borderc, Color newc) {
 
 void Layer::addShape(Shape s) {
 	shapeList.push_back(s);
+	isOutline.push_back(true);
+	isFill.push_back(true);
+}
+void Layer::deleteShape(int i) {
+	shapeList.erase(shapeList.begin() + i);
+	isOutline.erase(isOutline.begin() + i);
+	isFill.erase(isFill.begin() + i);
 }
 Shape& Layer::getShape(int index) {
 	return shapeList.at(index);
+}
+int Layer::getShapeCount() {
+	return shapeList.size();
 }
 
 void Layer::moveAll(int deltaX, int deltaY) {
@@ -237,7 +247,6 @@ void Layer::scaleAll(double x, Point poros) {
 	}
 }
 
-
 void Layer::drawShapeOutline(int index) {
 	Shape thisS = getShape(index);
 	
@@ -247,40 +256,37 @@ void Layer::drawShapeOutline(int index) {
 	}
 	drawLine(thisS.edges.at(i-1), thisS.edges.at(0), thisS.Border);
 }
-void Layer::drawAllShapeOutline() {
+
+void Layer::toggleOutline(int i, bool b) {
+	isOutline.at(i) = b;
+}
+void Layer::toggleFill(int i, bool b) {
+	isFill.at(i) = b;
+}
+void Layer::prepareLayers() {
 	ClearScreen();
 	for(int i=0; i<shapeList.size(); i++) {
-		drawShapeOutline(i);
+		
+		if(isOutline.at(i)) drawShapeOutline(i);
+		if(isFill.at(i)) {
+			
+			Shape thisS = getShape(i);
+			if(isOutline.at(i)) {
+				floodFill(thisS.floodfill_seed, Color(0,0,0), thisS.Fill);
+			} else {
+				drawShapeOutline(i);
+				floodFill(thisS.floodfill_seed, Color(0,0,0), thisS.Fill);
+				Color temp = thisS.Border;
+				thisS.Border = Color(0,0,0);
+				drawShapeOutline(i);
+				thisS.Border = temp;
+			}
+			
+		}
+		
 	}
 }
 
-void Layer::drawFilledShape(int index) {
-	drawShapeOutline(index);
-	Shape thisS = getShape(index);
-	floodFill(thisS.floodfill_seed, Color(0,0,0), thisS.Fill);
-}
-void Layer::drawFilledAllShape() {
-	drawAllShapeOutline();
-	for(int i=0; i<shapeList.size(); i++) {
-		drawFilledShape(i);
-	}
-}
 
-void Layer::deleteShape(int index) {
-	Shape thisS = getShape(index);
-	Color background(0,0,0);
-	
-	int i;
-	for(i=1; i<thisS.edges.size(); i++) {
-		drawLine(thisS.edges.at(i-1), thisS.edges.at(i), background);
-	}
-	drawLine(thisS.edges.at(i-1), thisS.edges.at(0), background);
-	
-	floodFill(thisS.floodfill_seed, thisS.Fill, background);
-}
-void Layer::deleteAllShape() {
-	for(int i=0; i<shapeList.size(); i++) {
-		deleteShape(i);
-	}	
-}
+
 

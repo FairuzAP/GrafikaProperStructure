@@ -10,7 +10,11 @@ using namespace std;
 Screen screen;
 int main() {
 	
-	// Screen initializing
+	return 0;
+}
+
+/*
+  	// Screen initializing
 	screen.ClearScreen();
 	screen.addLayer();
 	screen.addLayer();
@@ -24,7 +28,7 @@ int main() {
 	// Adding shape1 to layer 1, and prepare it for filled drawing 
 	screen.getLayer(1).addShape(s);
 	s.setFillColor(Color(0,255,0)); screen.getLayer(0).addShape(s);
-	screen.getLayer(1).drawFilledAllShape();
+	screen.getLayer(1).prepareLayers();
 	
 	// Shape2 Initializing
 	s.edges.clear();
@@ -33,7 +37,7 @@ int main() {
 	
 	// Adding shape2 to layer 0, and prepare it for filled drawing
 	screen.getLayer(0).addShape(s);
-	screen.getLayer(0).drawFilledAllShape();
+	screen.getLayer(0).prepareLayers();
 	
 	// Draw all Layer's prepared matrix
 	screen.drawAll();
@@ -41,26 +45,24 @@ int main() {
 	
 	// Scale all shape in layer 1, prepare for drawing, and draw it to the screen
 	screen.getLayer(1).scaleAll(1.5,Point(100,100));
-	screen.getLayer(1).drawFilledAllShape();
+	screen.getLayer(1).prepareLayers();
 	screen.drawAll();
 	usleep(1000000);
 	
 	// Move all shape in layer 1, prepare for drawing, and draw it to the screen
 	screen.getLayer(1).moveAll(50,50);
-	screen.getLayer(1).drawFilledAllShape();
+	screen.getLayer(1).prepareLayers();
 	screen.drawAll();
 	usleep(1000000);
 	
 	// Rotate all shape in layer 1, prepare for drawing, and draw it to the screen
 	for(int i=1; i<255; i++) {
+		
 		screen.getLayer(1).rotateAll(45,Point(150,150));
-		screen.getLayer(1).drawFilledAllShape();
+		screen.getLayer(1).prepareLayers();
 		screen.getLayer(0).rotateAll(30,Point(300,300));
-		screen.getLayer(0).drawFilledAllShape();
+		screen.getLayer(0).prepareLayers();
 		screen.drawAll();
 		usleep(50000);
 	}
-	
-	return 0;
-}
-
+*/
