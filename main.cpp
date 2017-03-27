@@ -83,10 +83,10 @@ int main() {
 				screen.getLayer(layer).deleteShape(object);
 			}
 		}
-		//screen.getLayer(1).rotateAll(45,Point(150,150));
-		screen.getLayer(1).drawFilledAllShape();
-		//screen.getLayer(0).rotateAll(30,Point(300,300));
-		screen.getLayer(0).drawFilledAllShape();
+		// Draw all layers
+		for (int i = 0; i < screen.getLayerCount(); i++) {
+			screen.getLayer(i).drawFilledAllShape();
+		}
 		screen.drawAll();
 	}
 	return 0;
