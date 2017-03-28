@@ -11,6 +11,15 @@ ColorMatrix::ColorMatrix(int width, int height) {
 	maxY = height;
 }
 
+ColorMatrix::ColorMatrix(const json& object) {
+	json map_object = object["map"];
+	for (json::iterator it = map_object.begin(); it != map_object.end(); ++it) {
+		map.push_back(Color(*it));
+	}
+	maxX = object["maxX"];
+	maxY = object["maxY"];
+}
+
 void ColorMatrix::setColor(Point p, Color c) {
 	map.at(p.x+p.y*maxX).setColor(c.getRed(), c.getGreen(), c.getBlue());
 }

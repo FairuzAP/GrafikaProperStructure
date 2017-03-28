@@ -8,6 +8,13 @@ Color::Color(int r, int g, int b){
 	setColor(r,g,b);
 }
 
+Color::Color(const json& object) {
+	Red = object[0];
+	Green = object[1];
+	Blue = object[2];
+	setColor(Red, Green, Blue);
+}
+
 void Color::setColor(int r, int g, int b){
 	Red = r;
 	Green = g;

@@ -10,6 +10,7 @@ class Color{
 public:
 	Color();					//constructor
 	Color(int r, int g, int b); //constructor with initial color
+	Color(const json& object);
 
 	void setColor(int r, int g, int b); //set semua warna
 	int getRed();

@@ -13,6 +13,7 @@ class Layer {
 public :
 	
 	Layer(int width, int height); // Constructor
+	Layer(const json& object);
 	
 	// Basic Getter Setter
 	Color getColor(Point p);

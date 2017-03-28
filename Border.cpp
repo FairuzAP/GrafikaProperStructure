@@ -6,9 +6,17 @@ Border::Border() {
 	minX = 0; maxX = 0;
 	minY = 0; maxY = 0;
 }
+
 Border::Border(int _minX, int _maxX, int _minY, int _maxY) {
 	minX = _minX; maxX = _maxX;
 	minY = _minY; maxY = _maxY;
+}
+
+Border::Border(const json& object) {
+	minX = object["minX"];
+	maxX = object["maxX"];
+	minY = object["minY"];
+	maxY = object["maxY"];
 }
 
 bool Border::isOverflow(Point p) {

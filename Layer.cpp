@@ -13,6 +13,29 @@ Layer::Layer(int _width, int _height) : colorMap(_width, _height) {
 	screenBorder.maxY = height-1;
 }
 
+Layer::Layer(const json& object): colorMap(ColorMatrix(object["colorMap"])) {
+	height = object["height"];
+	width = object["width"];
+	screenBorder = Border(object["screenBorder"]);
+
+	json shapeList_object = object["shapeList"];
+	for (json::iterator it = shapeList_object.begin(); it != shapeList_object.end(); ++it) {
+		shapeList.push_back(Shape(*it));
+	}
+
+	json isOutline_object = object["isOutline"];
+	for (json::iterator it = isOutline_object.begin(); it != isOutline_object.end(); ++it) {
+		bool temp = *it;
+		isOutline.push_back(temp);
+	}
+
+	json isFill_object = object["isFill"];
+	for (json::iterator it = isFill_object.begin(); it != isFill_object.end(); ++it) {
+		bool temp = *it;
+		isFill.push_back(temp);
+	}
+}
+
 Color Layer::getColor(Point p) {
 	if(p.y < 0 || p.y > height || p.x < 0 || p.x > width)
 		return Color(0,0,0);

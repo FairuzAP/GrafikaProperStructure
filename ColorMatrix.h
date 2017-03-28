@@ -10,6 +10,7 @@ class ColorMatrix{
 
 public:
 	ColorMatrix(int width, int height);
+	ColorMatrix(const json& object);
 	
 	void setColor(Point p, Color c); //set semua warna
 	Color getColor(Point p);

@@ -8,21 +8,35 @@ using namespace std;
 Shape::Shape() : Border(0,0,0), Fill(0,0,0) {
 	edges.clear();
 }
+
 Shape::Shape(vector<Point>& starting_edge, Color borderc, Color fillc) {
 	edges.clear();
 	edges = starting_edge;
 	Border = borderc;
 	Fill = fillc;
 }
+
 Shape::~Shape(){
 	edges.clear();
 }
+
 Shape::Shape(const Shape &obj){
 	this->floodfill_seed = obj.floodfill_seed;
 	this->edges = obj.edges;
 	this->Border = obj.Border;
 	this->Fill = obj.Fill;
 }
+
+Shape::Shape(const json& object) {
+	floodfill_seed = Point(object["floodfill_seed"]);
+	json edges_object = object["edges"];
+	for (json::iterator it = edges_object.begin(); it != edges_object.end(); ++it) {
+		edges.push_back(Point(*it));
+	}
+	Border = Color(object["Border"]);
+	Fill = Color(object["Fill"]);
+}
+
 Shape& Shape::operator=(const Shape &obj){
 	this->floodfill_seed = obj.floodfill_seed;
 	this->edges = obj.edges;

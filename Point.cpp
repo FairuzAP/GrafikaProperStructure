@@ -9,6 +9,12 @@ Point::Point(int x, int y) {
 	setPoint(x/1.00,y/1.00);
 } 	
 
+Point::Point(const json& object) {
+	double x = object[0];
+	double y = object[1];
+	setPoint(x, y);
+}
+
 void Point::setPoint(int x, int y) {
 	this->x = x/1.00;
 	this->y = y/1.00;

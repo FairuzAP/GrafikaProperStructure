@@ -10,6 +10,7 @@ class Point{
 public:
 	Point();					//constructor
 	Point(int x, int y); 		//constructor with initial x and y
+	Point(const json& object);
 
 	void setPoint(int x, int y); //set x and y
 	void setPoint(double x, double y); //set x and y , used for rotation

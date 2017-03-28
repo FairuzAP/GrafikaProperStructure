@@ -17,6 +17,7 @@ public:
 	Shape(vector<Point>& starting_edge, Color borderc, Color fillc);
 	Shape& operator=(const Shape &obj);
 	Shape(const Shape &obj);
+	Shape(const json& object);
 	
 	// Destructor
 	~Shape();

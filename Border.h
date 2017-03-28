@@ -8,6 +8,7 @@ class Border {
 public:
 	Border();
 	Border(int _minX, int _maxX, int _minY, int _maxY);
+	Border(const json& object);
 	
 	bool isOverflow(Point p);
 	int getClipCode(Point p);
