@@ -31,6 +31,8 @@ public:
 	void rotate(int theta, Point poros);
 	void scale(double x, Point poros);
 
+	json getJSONObject();
+
 
 	Point floodfill_seed;
 	vector<Point> edges;

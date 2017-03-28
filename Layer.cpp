@@ -287,6 +287,35 @@ void Layer::prepareLayers() {
 	}
 }
 
+json Layer::getJSONObject() {
+	json object;
 
+	object["height"] = height;
+	object["width"] = width;
+	object["colorMap"] = colorMap.getJSONObject();
+	object["screenBorder"] = screenBorder.getJSONObject();
+
+	json shapeList_object;
+	for (vector<Shape>::iterator it = shapeList.begin(); it != shapeList.end(); ++it) {
+		shapeList_object.push_back(it->getJSONObject());
+	}
+	object["shapeList"] = shapeList_object;
+	
+	json isOutline_object;
+	for (vector<bool>::iterator it = isOutline.begin(); it != isOutline.end(); ++it) {
+		bool temp = *it;
+		isOutline_object.push_back(temp);
+	}
+	object["isOutline"] = isOutline_object;
+	
+	json isFill_object;
+	for (vector<bool>::iterator it = isFill.begin(); it != isFill.end(); ++it) {
+		bool temp = *it;
+		isFill_object.push_back(temp);
+	}
+	object["isFill"] = isFill_object;
+	
+	return object;
+}
 
 

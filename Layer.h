@@ -40,6 +40,8 @@ public :
 	void toggleOutline(int i, bool b);
 	void toggleFill(int i, bool b);
 	void prepareLayers();
+
+	json getJSONObject();
 	
 private :
 	int height;

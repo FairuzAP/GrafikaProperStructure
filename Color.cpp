@@ -32,3 +32,10 @@ bool Color::isSame(Color C) {
 	}
 }
 
+json Color::getJSONObject() {
+	json object;
+	object.push_back(Red);
+	object.push_back(Green);
+	object.push_back(Blue);
+	return object;
+}

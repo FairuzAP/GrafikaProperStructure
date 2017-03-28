@@ -32,4 +32,11 @@ int Border::getClipCode(Point p) {
 	return code;
 }
 	
-
+json Border::getJSONObject() {
+	json object;
+	object["minX"] = minX;
+	object["maxX"] = maxX;
+	object["minY"] = minY;
+	object["maxY"] = maxY;
+	return object;
+}

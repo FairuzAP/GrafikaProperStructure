@@ -13,6 +13,8 @@ public:
 	
 	void setColor(Point p, Color c); //set semua warna
 	Color getColor(Point p);
+
+	json getJSONObject();
 	
 private:
 	vector<Color> map;

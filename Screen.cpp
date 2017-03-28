@@ -136,3 +136,44 @@ void Screen::drawAll() {
 	}
 }
 
+json Screen::getJSONObject() {
+	json object;
+
+	json layers_object;
+	for (vector<Layer>::iterator it = layers.begin(); it != layers.end(); ++it) {
+		layers_object.push_back(it->getJSONObject());
+	}
+	object["layers"] = layers_object;
+
+	json showlayers_object;
+	for (vector<bool>::iterator it = showlayers.begin(); it != showlayers.end(); ++it) {
+		bool temp = *it;
+		showlayers_object.push_back(temp);
+	}
+	object["showlayers"] = showlayers_object;
+
+	object["screeBorder"] = screenBorder.getJSONObject();
+
+	return object;
+}
+
+void Screen::saveLayers(const string& filename) {
+	cout << "Getting layers" << endl;
+	json json_file = getJSONObject();
+
+	cout << "Saving layers" << endl;
+
+	ofstream myfile(filename);
+  	if (myfile.is_open()) {
+		myfile << json_file << endl;
+    	myfile.close();
+  	} else {
+		cout << "Unable to open file" << endl;
+	}
+
+	cout << "Save layers finish" << endl;
+}
+
+void Screen::loadLayers(const string& filename) {
+
+}

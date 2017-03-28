@@ -1,6 +1,9 @@
 #ifndef __Color__
 #define __Color__
 
+#include "json.hpp"
+using json = nlohmann::json;
+
 // Model Class to store RGB Color Value
 class Color{
 
@@ -13,6 +16,7 @@ public:
 	int getGreen();
 	int getBlue();
 	bool isSame(Color C);
+	json getJSONObject();
 
 private:
 	int Red;

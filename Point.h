@@ -1,6 +1,9 @@
 #ifndef __Point__
 #define __Point__
 
+#include "json.hpp"
+using json = nlohmann::json;
+
 // Model Class to store 2 Dimentional Coordinates
 class Point{
 
@@ -19,6 +22,8 @@ public:
 	
 	void rotatePoros(double theta, Point poros);
 	void scaleBy(double ratio, Point anchor);
+
+	json getJSONObject();
 
 	double x;
 	double y;

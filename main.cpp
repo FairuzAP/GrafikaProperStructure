@@ -81,6 +81,10 @@ int main() {
 				cin >> layer >> object >> destLayer;
 				screen.getLayer(destLayer).addShape(screen.getLayer(layer).getShape(object));
 				screen.getLayer(layer).deleteShape(object);
+			} else if (!opr.compare("savelayers")){ /* save layer */
+				string filename;
+				cin >> filename;
+				screen.saveLayers(filename);
 			}
 		}
 		// Draw all layers

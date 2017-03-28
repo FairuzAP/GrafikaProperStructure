@@ -12,6 +12,8 @@ public:
 	bool isOverflow(Point p);
 	int getClipCode(Point p);
 	
+	json getJSONObject();
+	
 	int minX;
 	int maxX;
 	int minY;

@@ -64,3 +64,15 @@ void Shape::scale(double x, Point poros){
 	floodfill_seed.scaleBy(x, poros);
 }
 
+json Shape::getJSONObject() {
+	json object;
+	object["floodfill_seed"] = floodfill_seed.getJSONObject();
+	json edges_object;
+	for (vector<Point>::iterator edge = edges.begin(); edge != edges.end(); ++edge) {
+		edges_object.push_back(edge->getJSONObject());
+	}
+	object["edges"] = edges_object;
+	object["Border"] = Border.getJSONObject();
+	object["Fill"] = Fill.getJSONObject();
+	return object;
+}

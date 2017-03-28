@@ -66,3 +66,9 @@ void Point::scaleBy(double ratio, Point anchor) {
 	y = round(tempy);
 }
 
+json Point::getJSONObject() {
+	json object;
+	object.push_back(x);
+	object.push_back(y);
+	return object;
+}

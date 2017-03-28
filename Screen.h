@@ -9,11 +9,11 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <vector>
+#include <fstream>
+#include <iomanip>
 
 #include "Color.h"
 #include "Layer.h"
-
-using namespace std;
 
 class Screen{
 
@@ -41,7 +41,11 @@ public :
 	void toFront(int i);
 	
 	void drawAll();
+
+	json getJSONObject();
 	
+	void saveLayers(const string& filename);
+	void loadLayers(const string& filename);
 private :
 	struct fb_fix_screeninfo finfo;
 	struct fb_var_screeninfo vinfo;
